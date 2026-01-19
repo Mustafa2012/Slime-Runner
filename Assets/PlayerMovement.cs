@@ -2,18 +2,19 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
+    [Header("Movement")]
     public float moveSpeed = 6f;
     public float jumpForce = 7f;
-
-    public float shrinkRate = 0.5f;
-    public float minSize = 0.1f;
 
     Rigidbody2D rb;
     bool isGrounded;
 
+    PlayerHealth playerHealth;
+
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        playerHealth = GetComponent<PlayerHealth>();
     }
 
     void Update()
@@ -42,26 +43,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Obstacle"))
         {
-            Shrink();
-        }
-    }
-
-    void Shrink()
-    {
-        Vector3 scale = transform.localScale;
-        scale -= Vector3.one * shrinkRate * Time.deltaTime;
-
-        // Clamp so it never goes negative
-        scale.x = Mathf.Max(scale.x, minSize);
-        scale.y = Mathf.Max(scale.y, minSize);
-
-        transform.localScale = scale;
-
-        // Optional: game over check
-        if (scale.x <= minSize)
-        {
-            Debug.Log("Slime died");
-            // Time.timeScale = 0f; // uncomment later if you want freeze
+            playerHealth.TakeDamage(20f * Time.deltaTime);
         }
     }
 }
