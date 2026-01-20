@@ -1,17 +1,18 @@
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody2D))]
+[RequireComponent(typeof(PlayerHealth))]
 public class PlayerMovement : MonoBehaviour
 {
-    [Header("Movement")]
     public float moveSpeed = 6f;
     public float jumpForce = 7f;
 
-    Rigidbody2D rb;
-    bool isGrounded;
+    private Rigidbody2D rb;
+    private PlayerHealth playerHealth;
 
-    PlayerHealth playerHealth;
+    private bool isGrounded;
 
-    void Start()
+    void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
         playerHealth = GetComponent<PlayerHealth>();
@@ -19,7 +20,7 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        // Horizontal movement (A/D or Left/Right)
+        // Horizontal movement
         float moveInput = Input.GetAxis("Horizontal");
         rb.velocity = new Vector2(moveInput * moveSpeed, rb.velocity.y);
 
@@ -41,9 +42,23 @@ public class PlayerMovement : MonoBehaviour
 
     void OnCollisionStay2D(Collision2D collision)
     {
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            isGrounded = true;
+        }
+
         if (collision.gameObject.CompareTag("Obstacle"))
         {
+            // Damage slime instead of scaling directly
             playerHealth.TakeDamage(20f * Time.deltaTime);
+        }
+    }
+
+    void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            isGrounded = false;
         }
     }
 }
