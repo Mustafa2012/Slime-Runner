@@ -2,6 +2,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody2D))]
 [RequireComponent(typeof(PlayerHealth))]
+[RequireComponent(typeof(Animator))]
 public class PlayerMovement : MonoBehaviour
 {
     public float moveSpeed = 6f;
@@ -9,6 +10,8 @@ public class PlayerMovement : MonoBehaviour
 
     private Rigidbody2D rb;
     private PlayerHealth playerHealth;
+    private Animator animator;
+    private SpriteRenderer spriteRenderer;   // 👈 added
 
     private bool isGrounded;
 
@@ -16,6 +19,8 @@ public class PlayerMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         playerHealth = GetComponent<PlayerHealth>();
+        animator = GetComponent<Animator>();
+        spriteRenderer = GetComponentInChildren<SpriteRenderer>(); // 👈 added
     }
 
     void Update()
@@ -24,11 +29,25 @@ public class PlayerMovement : MonoBehaviour
         float moveInput = Input.GetAxis("Horizontal");
         rb.velocity = new Vector2(moveInput * moveSpeed, rb.velocity.y);
 
-        // Jump
+        // Speed animation
+        animator.SetFloat("Speed", Mathf.Abs(moveInput));
+
+        // 👉 FLIP LOGIC (ADDED)
+        if (moveInput > 0.01f)
+        {
+            spriteRenderer.flipX = false; // facing right
+        }
+        else if (moveInput < -0.01f)
+        {
+            spriteRenderer.flipX = true; // facing left
+        }
+
+        // Jump input
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
             isGrounded = false;
+            animator.SetBool("IsJumping", true);
         }
     }
 
@@ -37,6 +56,7 @@ public class PlayerMovement : MonoBehaviour
         if (collision.gameObject.CompareTag("Ground"))
         {
             isGrounded = true;
+            animator.SetBool("IsJumping", false);
         }
     }
 
@@ -45,11 +65,11 @@ public class PlayerMovement : MonoBehaviour
         if (collision.gameObject.CompareTag("Ground"))
         {
             isGrounded = true;
+            animator.SetBool("IsJumping", false);
         }
 
         if (collision.gameObject.CompareTag("Obstacle"))
         {
-            // Damage slime instead of scaling directly
             playerHealth.TakeDamage(20f * Time.deltaTime);
         }
     }
@@ -59,6 +79,7 @@ public class PlayerMovement : MonoBehaviour
         if (collision.gameObject.CompareTag("Ground"))
         {
             isGrounded = false;
+            animator.SetBool("IsJumping", true);
         }
     }
 }
