@@ -39,10 +39,10 @@ public class PlayerMovement : MonoBehaviour
         }
         else if (moveInput < -0.01f)
         {
-            spriteRenderer.flipX = true; // facing left
+            spriteRenderer.flipX = true; 
         }
 
-        // Jump input
+        
         if (Input.GetKeyDown(KeyCode.Space) && isGrounded)
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);

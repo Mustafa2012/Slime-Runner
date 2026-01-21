@@ -11,20 +11,13 @@ public class PlayerHealth : MonoBehaviour
     public Image healthBarFill;
 
     [Header("Slime Size")]
-    public float minSize = 0.2f;
+    public float minSize = 0.3f;
     public float maxSize = 1f;
 
     void Start()
     {
         currentHealth = maxHealth;
-        UpdateHealthBar();
-        UpdateSlimeSize();
-    }
-
-    void Update()
-    {
-        // Always keep size in sync with health
-        UpdateSlimeSize();
+        UpdateHealth();
     }
 
     public void TakeDamage(float amount)
@@ -32,40 +25,17 @@ public class PlayerHealth : MonoBehaviour
         currentHealth -= amount;
         currentHealth = Mathf.Clamp(currentHealth, 0f, maxHealth);
 
-        UpdateHealthBar();
-
-        if (currentHealth <= 0f)
-        {
-            Die();
-        }
+        UpdateHealth();
     }
 
-    public void Heal(float amount)
+    void UpdateHealth()
     {
-        currentHealth += amount;
-        currentHealth = Mathf.Clamp(currentHealth, 0f, maxHealth);
-
-        UpdateHealthBar();
-    }
-
-    void UpdateHealthBar()
-    {
+        // Update UI
         if (healthBarFill != null)
-        {
             healthBarFill.fillAmount = currentHealth / maxHealth;
-        }
-    }
 
-    void UpdateSlimeSize()
-    {
-        float t = currentHealth / maxHealth;
-        float size = Mathf.Lerp(minSize, maxSize, t);
-        transform.localScale = new Vector3(size, size, 1f);
-    }
-
-    void Die()
-    {
-        Debug.Log("Player died");
-        Time.timeScale = 0f;
+        // Map health to slime size
+        float size = Mathf.Lerp(minSize, maxSize, currentHealth / maxHealth);
+        transform.localScale = Vector3.one * size;
     }
 }
