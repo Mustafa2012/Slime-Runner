@@ -4,17 +4,17 @@ using System.Collections;
 
 public class LoadingScreen : MonoBehaviour
 {
-    public string sceneToLoad = "GameScene";  
-    public float minimumTime = 3f;            
+    public float minimumTime = 3f;
+    public string menuSceneName = "MenuScene"; 
 
     void Start()
     {
-        StartCoroutine(LoadGame());
+        StartCoroutine(LoadMenu());
     }
 
-    private IEnumerator LoadGame()
+    private IEnumerator LoadMenu()
     {
         yield return new WaitForSeconds(minimumTime);
-        SceneManager.LoadScene(sceneToLoad);
+        SceneManager.LoadScene(menuSceneName);
     }
 }

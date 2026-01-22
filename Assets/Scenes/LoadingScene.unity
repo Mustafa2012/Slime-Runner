@@ -283,7 +283,7 @@ AudioListener:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 908773971}
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!20 &908773973
 Camera:
   m_ObjectHideFlags: 0
@@ -371,8 +371,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 743201889a41b4c6ebf406bf0c3c0937, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneToLoad: GameScene
   minimumTime: 3
+  menuSceneName: MenuScene
 --- !u!4 &1488890379
 Transform:
   m_ObjectHideFlags: 0

@@ -283,7 +283,7 @@ AudioListener:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 539375228}
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!20 &539375230
 Camera:
   m_ObjectHideFlags: 0
@@ -391,6 +391,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c9f93479c62048aeb02cc2c1c02288d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameSceneName: GameScene
 --- !u!1 &1124059557
 GameObject:
   m_ObjectHideFlags: 0
@@ -620,7 +621,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1256835755
 RectTransform:
   m_ObjectHideFlags: 0
