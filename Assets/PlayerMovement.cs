@@ -11,7 +11,7 @@ public class PlayerMovement : MonoBehaviour
     private Rigidbody2D rb;
     private PlayerHealth playerHealth;
     private Animator animator;
-    private SpriteRenderer spriteRenderer;   // 👈 added
+    private SpriteRenderer spriteRenderer;   
 
     private bool isGrounded;
 
@@ -20,22 +20,22 @@ public class PlayerMovement : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         playerHealth = GetComponent<PlayerHealth>();
         animator = GetComponent<Animator>();
-        spriteRenderer = GetComponentInChildren<SpriteRenderer>(); // 👈 added
+        spriteRenderer = GetComponentInChildren<SpriteRenderer>(); 
     }
 
     void Update()
     {
-        // Horizontal movement
+        
         float moveInput = Input.GetAxis("Horizontal");
         rb.velocity = new Vector2(moveInput * moveSpeed, rb.velocity.y);
 
-        // Speed animation
+        
         animator.SetFloat("Speed", Mathf.Abs(moveInput));
 
-        // 👉 FLIP LOGIC (ADDED)
+        
         if (moveInput > 0.01f)
         {
-            spriteRenderer.flipX = false; // facing right
+            spriteRenderer.flipX = false; 
         }
         else if (moveInput < -0.01f)
         {
