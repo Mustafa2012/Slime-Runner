@@ -1,13 +1,20 @@
-
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class MainMenu : MonoBehaviour
 {
-    public string gameSceneName = "GameScene"; 
-
     public void Play()
     {
-        SceneManager.LoadScene(gameSceneName);
+        SceneManager.LoadScene("GameScene");
+    }
+
+    public void Instructions()
+    {
+        SceneManager.LoadScene("InstructionsScene");
+    }
+
+    public void Quit()
+    {
+        Application.Quit();
     }
 }
