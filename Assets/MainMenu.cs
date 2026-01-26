@@ -8,7 +8,7 @@ public class MainMenu : MonoBehaviour
         SceneManager.LoadScene("GameScene");
     }
 
-    public void Instructions()
+    public void Instructions() 
     {
         SceneManager.LoadScene("InstructionsScene");
     }
